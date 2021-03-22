@@ -9,6 +9,6 @@ const post = new Post('Webpack Post Title', WebpackLogo)
 
 console.log('Post to String: ', post.toString())
 
-console.log('jsons: ', json)
-console.log('XML', xml)
-console.log('csv', csv)
+// console.log('jsons: ', json)
+// console.log('XML', xml)
+// console.log('csv', csv)
