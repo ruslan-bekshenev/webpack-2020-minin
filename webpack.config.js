@@ -19,6 +19,13 @@ module.exports = {
     }),
     new CleanWebpackPlugin()
   ],
+  resolve: {
+    extensions: ['.js', '.json', '.png'],
+    alias: {
+      '@models': path.resolve(__dirname, 'src/models'),
+      '@': path.resolve(__dirname, 'src')
+    }
+  },
   module: {
     rules: [
       {
