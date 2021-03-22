@@ -4,8 +4,9 @@ import json from '@/assets/json'
 import WebpackLogo from '@/assets/webpack-logo'
 import xml from '@/assets/data.xml'
 import csv from '@/assets/data.csv'
-
 import './styles/style.css'
+import './styles/less.less'
+
 const post = new Post('Webpack Post Title', WebpackLogo)
 
 $('pre').addClass('code').html(post.toString())

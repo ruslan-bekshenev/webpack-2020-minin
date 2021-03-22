@@ -9,6 +9,8 @@ const TerserWebpackPlugin = require('terser-webpack-plugin')
 const isDev = process.env.NODE_ENV === 'development'
 const isProd = !isDev
 
+const filename = ext => isDev ? `[name].${ext}` : `[name].[hash].${ext}`
+
 const optimization = () => {
   const config = {
     splitChunks: {
@@ -32,7 +34,7 @@ module.exports = {
   },
   mode: 'development',
   output: {
-    filename: '[name].[contenthash].js',
+    filename: filename('js'),
     path: path.resolve(__dirname, 'dist')
   },
   plugins: [
@@ -52,7 +54,7 @@ module.exports = {
       ]
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].css'
+      filename: filename('css')
     })
   ],
   resolve: {
@@ -75,6 +77,17 @@ module.exports = {
           loader: MiniCssExtractPlugin.loader,
           options: {},
         }, 'css-loader'] //идет справа налево
+      },
+      {
+        test: /\.less$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {},
+          },
+          'css-loader',
+          'less-loader'
+        ] //идет с конца
       },
       {
         test: /\.(png|jpg|svg|gif)$/,
