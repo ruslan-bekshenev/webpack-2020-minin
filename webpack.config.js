@@ -26,8 +26,20 @@ module.exports = {
         use: ['style-loader', 'css-loader'] //идет справа налево
       },
       {
-        test: /\.(png|jpg|svg|gif)/,
+        test: /\.(png|jpg|svg|gif)$/,
         use: ['file-loader']
+      },
+      {
+        test: /\.(ttf|woff|woff2|eot)$/,
+        use: ['file-loader']
+      },
+      {
+        test: /\.xml$/,
+        use: ['xml-loader']
+      },
+      {
+        test: /\.csv$/,
+        use: ['csv-loader']
       }
     ]
   }
