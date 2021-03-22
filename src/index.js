@@ -1,3 +1,4 @@
+import * as $ from 'jquery'
 import Post from '@models/Post'
 import json from '@/assets/json'
 import WebpackLogo from '@/assets/webpack-logo'
@@ -6,6 +7,8 @@ import csv from '@/assets/data.csv'
 
 import './styles/style.css'
 const post = new Post('Webpack Post Title', WebpackLogo)
+
+$('pre').html(post.toString())
 
 console.log('Post to String: ', post.toString())
 
