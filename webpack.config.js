@@ -1,6 +1,7 @@
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
@@ -17,5 +18,17 @@ module.exports = {
       template: './index.html'
     }),
     new CleanWebpackPlugin()
-  ]
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'] //идет справа налево
+      },
+      {
+        test: /\.(png|jpg|svg|gif)/,
+        use: ['file-loader']
+      }
+    ]
+  }
 }
