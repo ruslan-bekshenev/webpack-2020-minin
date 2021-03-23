@@ -38,10 +38,25 @@ const optimization = () => {
   return config
 }
 
+const babelOptions = preset => {
+  const opts = {
+    presets: [
+      '@babel/preset-env',
+    ],
+    plugins: [
+      '@babel/plugin-proposal-class-properties'
+    ]
+  }
+  if (preset) {
+    opts.presets.push(preset)
+  }
+  return opts
+}
+
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
-    main: ['@babel/polyfill', './index.js'],
+    main: ['@babel/polyfill', './index.jsx'],
     analytics: './analytics.ts'
   },
   mode: 'development',
@@ -78,8 +93,8 @@ module.exports = {
   },
   optimization: optimization(),
   devServer: {
-    port: 4200,
-    hot: isDev
+    port: 3000,
+    hot: true
   },
   module: {
     rules: [
@@ -116,14 +131,7 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-          options: {
-            presets: [
-              '@babel/preset-env'
-            ],
-            plugins: [
-              '@babel/plugin-proposal-class-properties'
-            ]
-          }
+          options: babelOptions()
         }
       },
       {
@@ -131,15 +139,15 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-          options: {
-            presets: [
-              '@babel/preset-env',
-              '@babel/preset-typescript'
-            ],
-            plugins: [
-              '@babel/plugin-proposal-class-properties'
-            ]
-          }
+          options: babelOptions('@babel/preset-typescript')
+        }
+      },
+      {
+        test: /\.jsx$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: babelOptions('@babel/preset-react')
         }
       }
     ]
