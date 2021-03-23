@@ -1,6 +1,6 @@
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetWebpackPlugin = require('optimize-css-assets-webpack-plugin')
@@ -41,7 +41,7 @@ const optimization = () => {
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
-    main: './index.js',
+    main: ['@babel/polyfill', './index.js'],
     analytics: './analytics.js'
   },
   mode: 'development',
@@ -110,6 +110,21 @@ module.exports = {
       {
         test: /\.csv$/,
         use: ['csv-loader']
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              '@babel/preset-env'
+            ],
+            plugins: [
+              '@babel/plugin-proposal-class-properties'
+            ]
+          }
+        }
       }
     ]
   }
