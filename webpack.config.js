@@ -10,7 +10,19 @@ const isDev = process.env.NODE_ENV === 'development'
 const isProd = !isDev
 
 const filename = ext => isDev ? `[name].${ext}` : `[name].[hash].${ext}`
-
+const cssLoaders = extra => {
+  const loaders = [
+    {
+      loader: MiniCssExtractPlugin.loader,
+      options: {},
+    },
+    'css-loader'
+  ]
+  if (extra) {
+    loaders.push(extra)
+  }
+  return loaders
+}
 const optimization = () => {
   const config = {
     splitChunks: {
@@ -73,21 +85,15 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [{
-          loader: MiniCssExtractPlugin.loader,
-          options: {},
-        }, 'css-loader'] //идет справа налево
+        use: cssLoaders() //идет справа налево
       },
       {
         test: /\.less$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {},
-          },
-          'css-loader',
-          'less-loader'
-        ] //идет с конца
+        use: cssLoaders('less-loader')
+      },
+      {
+        test: /\.s[ac]ss$/,
+        use: cssLoaders('sass-loader')
       },
       {
         test: /\.(png|jpg|svg|gif)$/,
