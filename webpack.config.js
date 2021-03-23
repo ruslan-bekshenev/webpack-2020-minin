@@ -94,7 +94,7 @@ module.exports = {
   optimization: optimization(),
   devServer: {
     port: 3000,
-    hot: true
+    hot: isDev
   },
   module: {
     rules: [
